@@ -47,7 +47,7 @@ const [portfolioFilter, setPortfolioFilter] = useState("All");
   );
 
   const MenuIcon = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="#00eeff" stroke="#00eeff" strokeWidth="2">
       <line x1="3" y1="12" x2="21" y2="12"></line>
       <line x1="3" y1="6" x2="21" y2="6"></line>
       <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -55,7 +55,7 @@ const [portfolioFilter, setPortfolioFilter] = useState("All");
   );
 
   const XIcon = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="#00eeff" stroke="#00eeff" strokeWidth="2">
       <line x1="18" y1="6" x2="6" y2="18"></line>
       <line x1="6" y1="6" x2="18" y2="18"></line>
     </svg>
@@ -268,99 +268,175 @@ const [portfolioFilter, setPortfolioFilter] = useState("All");
 
       {/* Work Experience */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h2 className={`text-4xl font-bold text-center mb-16 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-            My <span style={{color: '#00eeff'}}>Work Experience</span>
-          </h2>
-          
-          <div className="flex justify-center">
-            <div className="relative max-w-4xl w-full">
-              {/* Timeline line */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1" style={{background: 'linear-gradient(to bottom, #00eeff, #545454, #00eeff, #545454, #00eeff, #545454)'}}></div>
-              
-              <div className="space-y-16">
-                {/* Item 1 - Left */}
-                <div className="flex items-center">
-                  <div className="w-1/2 pr-8 text-right">
-                    <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg border-r-4 inline-block`} style={{borderColor: '#00eeff'}}>
-                      <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>C&I Leasing Plc, Nigeria</h3>
-                      <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>Jan 2018 - Sep 2018</p>
-                      <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>IT Support Intern</p>
-                    </div>
-                  </div>
-                  <div className="w-4 h-4 rounded-full absolute left-1/2 transform -translate-x-1/2" style={{background: '#00eeff', boxShadow: '0 0 0 4px rgba(0, 238, 255, 0.2)'}}></div>
-                  <div className="w-1/2 pl-8"></div>
-                </div>
+  <div className="max-w-7xl mx-auto">
+    <h2 className={`text-4xl font-bold text-center mb-16 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+      My <span style={{color: '#00eeff'}}>Work Experience</span>
+    </h2>
 
-                {/* Item 2 - Right */}
-                <div className="flex items-center">
-                  <div className="w-1/2 pr-8"></div>
-                  <div className="w-4 h-4 bg-gray-400 rounded-full absolute left-1/2 transform -translate-x-1/2" style={{boxShadow: '0 0 0 4px rgba(84, 84, 84, 0.2)'}}></div>
-                  <div className="w-1/2 pl-8">
-                    <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg border-l-4 inline-block`} style={{borderColor: '#545454'}}>
-                      <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Malachy Microfinance Bank, Nigeria</h3>
-                      <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>June 2023 - Present</p>
-                      <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>IT Consultant</p>
-                    </div>
-                  </div>
-                </div>
+    <div className="flex justify-center">
+      <div className="relative max-w-4xl w-full">
 
-                {/* Item 3 - Left */}
-                <div className="flex items-center">
-                  <div className="w-1/2 pr-8 text-right">
-                    <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg border-r-4 inline-block`} style={{borderColor: '#00eeff'}}>
-                      <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Wootlab Foundation, Nigeria</h3>
-                      <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>Oct 2023 - Nov 2023</p>
-                      <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Web Dev Tutor</p>
-                    </div>
-                  </div>
-                  <div className="w-4 h-4 rounded-full absolute left-1/2 transform -translate-x-1/2" style={{background: '#00eeff', boxShadow: '0 0 0 4px rgba(0, 238, 255, 0.2)'}}></div>
-                  <div className="w-1/2 pl-8"></div>
-                </div>
+        {/* Timeline Line */}
+        <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1"
+          style={{background: 'linear-gradient(to bottom, #00eeff, #545454, #00eeff, #545454, #00eeff, #545454)'}}>
+        </div>
 
-                {/* Item 4 - Right */}
-                <div className="flex items-center">
-                  <div className="w-1/2 pr-8"></div>
-                  <div className="w-4 h-4 bg-gray-400 rounded-full absolute left-1/2 transform -translate-x-1/2" style={{boxShadow: '0 0 0 4px rgba(84, 84, 84, 0.2)'}}></div>
-                  <div className="w-1/2 pl-8">
-                    <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg border-l-4 inline-block`} style={{borderColor: '#545454'}}>
-                      <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Agroease Ltd, Nigeria</h3>
-                      <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>Oct 2023 - Present</p>
-                      <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Chief Digital Officer</p>
-                    </div>
-                  </div>
-                </div>
+        <div className="space-y-16">
 
-                {/* Item 5 - Left */}
-                <div className="flex items-center">
-                  <div className="w-1/2 pr-8 text-right">
-                    <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg border-r-4 inline-block`} style={{borderColor: '#00eeff'}}>
-                      <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>TBI, Mauritius</h3>
-                      <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>June 2025 - Aug 2025</p>
-                      <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Content Writer & Wordpress Developer</p>
-                    </div>
-                  </div>
-                  <div className="w-4 h-4 rounded-full absolute left-1/2 transform -translate-x-1/2" style={{background: '#00eeff', boxShadow: '0 0 0 4px rgba(0, 238, 255, 0.2)'}}></div>
-                  <div className="w-1/2 pl-8"></div>
-                </div>
-
-                {/* Item 6 - Right */}
-                <div className="flex items-center">
-                  <div className="w-1/2 pr-8"></div>
-                  <div className="w-4 h-4 bg-gray-400 rounded-full absolute left-1/2 transform -translate-x-1/2" style={{boxShadow: '0 0 0 4px rgba(84, 84, 84, 0.2)'}}></div>
-                  <div className="w-1/2 pl-8">
-                    <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg border-l-4 inline-block`} style={{borderColor: '#545454'}}>
-                      <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>StevenHills Limited, Mauritius</h3>
-                      <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>Sep 2025 - Present</p>
-                      <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>IT Administrator & Graphic Designer</p>
-                    </div>
-                  </div>
-                </div>
+          {/* ===========================
+               ITEM 1 (LEFT)
+               =========================== */}
+          <div className="relative md:flex items-center">
+            
+            {/* Card */}
+            <div className="md:w-1/2 pr-8 text-right">
+              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg border-r-4 inline-block`}
+                style={{borderColor: '#00eeff'}}>
+                <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  C&I Leasing Plc, Nigeria
+                </h3>
+                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
+                  Jan 2018 - Sep 2018
+                </p>
+                <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>
+                  IT Support Intern
+                </p>
               </div>
             </div>
+
+            {/* Dot */}
+            <div
+              className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full"
+              style={{background: '#00eeff', boxShadow: '0 0 0 4px rgba(0, 238, 255, 0.2)'}}
+            ></div>
+
+            <div className="md:w-1/2 pl-8"></div>
           </div>
+
+
+          {/* ===========================
+               ITEM 2 (RIGHT)
+               =========================== */}
+          <div className="relative md:flex items-center">
+
+            <div className="md:w-1/2 pr-8"></div>
+
+            <div
+              className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full"
+              style={{background:'#545454', boxShadow:'0 0 0 4px rgba(84, 84, 84, 0.2)'}}
+            ></div>
+
+            <div className="md:w-1/2 pl-8">
+              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg border-l-4 inline-block`}
+                style={{borderColor: '#545454'}}>
+                <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Malachy Microfinance Bank, Nigeria</h3>
+                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>June 2023 - Present</p>
+                <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>IT Consultant</p>
+              </div>
+            </div>
+
+          </div>
+
+
+          {/* ===========================
+               ITEM 3 (LEFT)
+               =========================== */}
+          <div className="relative md:flex items-center">
+            
+            <div className="md:w-1/2 pr-8 text-right">
+              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg border-r-4 inline-block`}
+                style={{borderColor: '#00eeff'}}>
+                <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Wootlab Foundation, Nigeria</h3>
+                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>Oct 2023 - Nov 2023</p>
+                <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Web Dev Tutor</p>
+              </div>
+            </div>
+
+            <div
+              className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full"
+              style={{background:'#00eeff', boxShadow:'0 0 0 4px rgba(0,238,255,0.2)'}}
+            ></div>
+
+            <div className="md:w-1/2 pl-8"></div>
+          </div>
+
+
+          {/* ===========================
+               ITEM 4 (RIGHT)
+               =========================== */}
+          <div className="relative md:flex items-center">
+
+            <div className="md:w-1/2 pr-8"></div>
+
+            <div
+              className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full"
+              style={{background:'#545454', boxShadow:'0 0 0 4px rgba(84, 84, 84, 0.2)'}}
+            ></div>
+
+            <div className="md:w-1/2 pl-8">
+              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg border-l-4 inline-block`}
+                style={{borderColor: '#545454'}}>
+                <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Agroease Ltd, Nigeria</h3>
+                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>Oct 2023 - Present</p>
+                <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Chief Digital Officer</p>
+              </div>
+            </div>
+
+          </div>
+
+
+          {/* ===========================
+               ITEM 5 (LEFT)
+               =========================== */}
+          <div className="relative md:flex items-center">
+            
+            <div className="md:w-1/2 pr-8 text-right">
+              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg border-r-4 inline-block`}
+                style={{borderColor: '#00eeff'}}>
+                <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>TBI, Mauritius</h3>
+                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>June 2025 - Aug 2025</p>
+                <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Content Writer & Wordpress Developer</p>
+              </div>
+            </div>
+
+            <div
+              className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full"
+              style={{background:'#00eeff', boxShadow:'0 0 0 4px rgba(0,238,255,0.2)'}}
+            ></div>
+
+            <div className="md:w-1/2 pl-8"></div>
+          </div>
+
+
+          {/* ===========================
+               ITEM 6 (RIGHT)
+               =========================== */}
+          <div className="relative md:flex items-center">
+
+            <div className="md:w-1/2 pr-8"></div>
+
+            <div
+              className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full"
+              style={{background:'#545454', boxShadow:'0 0 0 4px rgba(84,84,84,0.2)'}}
+            ></div>
+
+            <div className="md:w-1/2 pl-8">
+              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg border-l-4 inline-block`}
+                style={{borderColor: '#545454'}}>
+                <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>StevenHills Limited, Mauritius</h3>
+                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>Sep 2025 - Present</p>
+                <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>IT Administrator & Graphic Designer</p>
+              </div>
+            </div>
+
+          </div>
+
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Why Hire Me */}
       <section className={`py-16 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-gray-800' : 'bg-gray-900'} relative overflow-hidden`}>
