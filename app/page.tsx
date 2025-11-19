@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -8,6 +7,8 @@ export default function Portfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesSlide, setServicesSlide] = useState(0);
   const [portfolioSlide, setPortfolioSlide] = useState(0);
+const [portfolioFilter, setPortfolioFilter] = useState("All");
+
 
   useEffect(() => {
     if (darkMode) {
@@ -19,13 +20,13 @@ export default function Portfolio() {
 
   // Icon components
   const MoonIcon = () => (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="white" stroke="white" strokeWidth="2"  className="bg-[#00eeff] rounded-full p-1">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="#323946" stroke="#323946" strokeWidth="2"  className="bg-[#00eeff] rounded-full p-1">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
     </svg>
   );
 
   const SunIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#00eeff]">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="#323946" stroke="#323946" strokeWidth="2" className="bg-[#] rounded-full p-1">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -61,14 +62,14 @@ export default function Portfolio() {
   );
 
   const MailIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={darkMode ? "white" : "#00eeff"} strokeWidth="2">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={darkMode ? "white" : "#323946"} strokeWidth="2">
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
       <polyline points="22,6 12,13 2,6"></polyline>
     </svg>
   );
 
   const PhoneIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={darkMode ? "white" : "#00eeff"} strokeWidth="2">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={darkMode ? "white" : "#323946"} strokeWidth="2">
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
     </svg>
   );
@@ -108,7 +109,7 @@ export default function Portfolio() {
               <a href="#portfolio" className={`${darkMode ? 'text-[#00eeff] hover:text-white' : 'text-[#00eeff] hover:text-gray-900'}`}>Portfolio</a>
               <button 
                 onClick={() => setDarkMode(!darkMode)}
-                className={`p-2 rounded-full ${darkMode ? 'bg-white' : 'bg-[#00eeff]'}`}
+                className={`p-2 rounded-full ${darkMode ? 'bg-[#00eeff]' : 'bg-[#00eeff]'}`}
               >
                 {darkMode ? <SunIcon /> : <MoonIcon />}
               </button>
@@ -159,11 +160,8 @@ export default function Portfolio() {
                 I'm <span style={{color: '#00eeff'}}>Joshua</span>,
               </h1>
               <h2 className={`text-4xl lg:text-5xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                FullStack Developer and Graphic Designer
+                A FullStack Developer and Graphic Designer
               </h2>
-              <p className={`text-lg mb-8 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
               <button className="orange-gradient text-[#323946] px-8 py-3 rounded-full font-medium flex items-center space-x-2">
                 <span>Portfolio</span>
                 <ArrowRightIcon />
@@ -172,19 +170,28 @@ export default function Portfolio() {
             <div className="lg:w-1/2 relative">
               <div className="relative w-80 h-80 mx-auto">
                 <div className="absolute inset-0 rounded-full" style={{background: '#00eeff', opacity: 0.2}}></div>
-                <div className="absolute inset-8 rounded-full overflow-hidden" style={{background: '#00eeff'}}>
-                  <div className={`w-full h-full flex items-center justify-center ${darkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                    <div className="text-center">
-                      <div className="flex items-center justify-center space-x-1 mb-2">
-                        {[...Array(5)].map((_, i) => (
-                          <span key={i} className="text-yellow-400">★</span>
-                        ))}
-                      </div>
-                      <div className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>4+ Years</div>
-                      <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Experience</div>
-                    </div>
-                  </div>
-                </div>
+                <div className="absolute inset-8 rounded-full overflow-hidden" style={{ background: '#00eeff' }}>
+  {/* Background image */}
+  <img
+    src="/Img/Award.png"
+    alt="Background"
+    className="w-full h-full object-cover object-center"
+  />
+
+  {/* Gray overlay & content */}
+  <div className={`absolute inset-0 flex items-center justify-center ${darkMode ? 'bg-gray-700/60' : 'bg-gray-200/70'}`}>
+    <div className="text-center">
+      <div className="flex items-center justify-center space-x-1 mb-2">
+        {[...Array(5)].map((_, i) => (
+          <span key={i} className="text-yellow-400">★</span>
+        ))}
+      </div>
+      <div className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>4+ Years</div>
+      <div className={`text-sm ${darkMode ? 'text-white' : 'text-gray-600'}`}>Experience</div>
+    </div>
+  </div>
+</div>
+
               </div>
             </div>
           </div>
@@ -192,61 +199,72 @@ export default function Portfolio() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className={`py-16 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
-        <div className="max-w-7xl mx-auto">
-          <h2 className={`text-4xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-            My <span style={{color: '#00eeff'}}>Services</span>
-          </h2>
-          <p className={`mb-12 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-          
-          <div className="relative">
-            <div className="overflow-hidden">
-              <div 
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${servicesSlide * 100}%)` }}
-              >
-                {['Graphic Design', 'Web Development', 'Brand Design'].map((service, idx) => (
-                  <div key={idx} className="w-full md:w-1/3 flex-shrink-0 px-4">
-                    <div className={`${darkMode ? 'bg-gray-700' : 'bg-white'} rounded-3xl p-6 shadow-lg relative overflow-hidden group hover:scale-105 transition-transform h-full`}>
-                      <h3 className={`text-2xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{service}</h3>
-                      <div className={`${darkMode ? 'bg-gray-600' : 'bg-gray-100'} rounded-2xl p-4 mb-4 h-48 flex items-center justify-center`}>
-                        <div className="grid grid-cols-2 gap-2 w-full">
-                          {[...Array(4)].map((_, i) => (
-                            <div key={i} className={`${darkMode ? 'bg-gray-500' : 'bg-white'} rounded-lg p-3 shadow`}>
-                              <div style={{background: '#00eeff'}} className="w-8 h-8 rounded mb-2"></div>
-                              <div className={`h-2 ${darkMode ? 'bg-gray-400' : 'bg-gray-300'} rounded mb-1`}></div>
-                              <div className={`h-2 ${darkMode ? 'bg-gray-400' : 'bg-gray-300'} rounded w-3/4`}></div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <button className={`absolute bottom-6 right-6 ${darkMode ? 'bg-gray-600' : 'bg-gray-900'} text-white p-3 rounded-full group-hover:bg-[#00eeff] transition-colors`}>
-                        <ArrowRightIcon />
-                      </button>
-                    </div>
-                  </div>
-                ))}
+      <section
+  id="services"
+  className={`py-16 px-4 sm:px-6 lg:px-8 ${
+    darkMode ? "bg-gray-800" : "bg-gray-900"
+  } relative overflow-hidden`}
+>
+  {/* Background decorative elements */}
+  <div className="absolute top-0 left-0 w-96 h-96 bg-cyan-500 rounded-full filter blur-3xl opacity-20"></div>
+  <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-400 rounded-full filter blur-3xl opacity-20"></div>
+
+  <div className="max-w-7xl mx-auto relative z-10">
+    <h2 className="text-4xl font-bold mb-4 text-white">
+      My <span className="text-cyan-400">Services</span>
+    </h2>
+    <p className="mb-12 text-white max-w-2xl">
+    High-quality design and development services built to elevate your brand and create meaningful digital impact.
+    </p>
+
+    <div className="relative">
+      <div className="overflow-hidden">
+        <div
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{ transform: `translateX(-${servicesSlide * 100}%)` }}
+        >
+          {[
+            {
+              title: "Web Development",
+              image: "/Img/Agroconnect.png",
+            },
+            {
+              title: "Graphic Design",
+              image: "/Img/New One.jpg",
+            },
+            {
+              title: "Brand Design",
+              image: "/Img/Bay.png",
+            },
+          ].map((service, idx) => (
+            <div key={idx} className="w-full md:w-1/3 flex-shrink-0 px-4">
+              <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-3xl p-6 relative overflow-hidden group hover:scale-105 transition-all h-full">
+
+                {/* Title */}
+                <h3 className="text-2xl font-bold mb-6 text-white">{service.title}</h3>
+
+                {/* Image Preview (Single Image Per Card) */}
+                <div className="backdrop-blur-sm bg-white/10 rounded-2xl mb-4 overflow-hidden h-64 flex items-center justify-center">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover rounded-2xl"
+                  />
+                </div>
+
+                {/* Button */}
+                <button className="absolute bottom-6 right-6 bg-gray-800/80 text-white p-4 rounded-full group-hover:bg-cyan-500 transition-colors border border-white/10">
+                  <ArrowRightIcon />
+                </button>
               </div>
             </div>
-            
-            {/* Swiper Dots */}
-            <div className="flex justify-center mt-8 space-x-2">
-              {[0, 1, 2].map((index) => (
-                <button
-                  key={index}
-                  onClick={() => setServicesSlide(index)}
-                  className={`h-3 rounded-full transition-all ${
-                    servicesSlide === index ? 'bg-[#00eeff] w-8' : 'bg-gray-400 w-3'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Work Experience */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -345,34 +363,41 @@ export default function Portfolio() {
       </section>
 
       {/* Why Hire Me */}
-      <section className={`py-16 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
+      <section className={`py-16 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-gray-800' : 'bg-gray-900'} relative overflow-hidden`}>
+        {/* Background decorative elements */}
+        <div className="absolute top-0 left-0 w-96 h-96 bg-cyan-500 rounded-full filter blur-3xl opacity-20"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-400 rounded-full filter blur-3xl opacity-20"></div>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center justify-between">
             <div className="lg:w-1/2 mb-8 lg:mb-0 relative">
               <div className="relative w-80 h-96 mx-auto">
                 <div className="absolute inset-0 rounded-full" style={{background: '#00eeff', opacity: 0.2}}></div>
-                <div className="absolute inset-8 rounded-t-full overflow-hidden" style={{background: '#00eeff'}}>
-                  <div className={`w-full h-full flex items-center justify-center ${darkMode ? 'bg-gray-700' : 'bg-gray-200'}`}></div>
-                </div>
+                <div className="absolute inset-8 rounded-full overflow-hidden flex items-center justify-center" style={{ background: '#00eeff' }}>
+                <img src="/Img/Half.png" alt="Profile" className="w-full h-full object-cover object-[40%_center]"/>
+              </div>
               </div>
             </div>
             
             <div className="lg:w-1/2">
-              <h2 className={`text-4xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              <h2 className={`text-4xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-white'}`}>
                 Why <span style={{color: '#00eeff'}}>Hire me</span>?
               </h2>
-              <p className={`mb-8 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              <p className={`mb-8 ${darkMode ? 'text-white' : 'text-white'}`}>
+              I’m an enthusiastic problem-solver with a deep love for technology and lifelong learning. I believe in doing things the right way — with integrity, accountability, and a strong work ethic.
+
+My skill set spans JavaScript, CSS, and Adobe Photoshop, and I enjoy building digital experiences that are both functional and visually engaging. I’m always looking for opportunities that challenge me and allow me to refine my craft.
+
+What sets me apart is my commitment to follow-through. When I take on a task, I give it my full attention and ensure it’s completed with care, creativity, and intention.
               </p>
               
               <div className="grid grid-cols-2 gap-6 mb-8">
                 <div>
-                  <div className={`text-4xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>450+</div>
-                  <div className={darkMode ? 'text-gray-400' : 'text-gray-600'}>Project Completed</div>
+                  <div className={`text-4xl font-bold ${darkMode ? 'text-white' : 'text-white'}`}>20+</div>
+                  <div className={darkMode ? 'text-gray-400' : 'text-white'}>Project Completed</div>
                 </div>
                 <div>
-                  <div className={`text-4xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>450+</div>
-                  <div className={darkMode ? 'text-gray-400' : 'text-gray-600'}>Happy Clients</div>
+                  <div className={`text-4xl font-bold ${darkMode ? 'text-white' : 'text-white'}`}>20+</div>
+                  <div className={darkMode ? 'text-gray-400' : 'text-white'}>Happy Clients</div>
                 </div>
               </div>
               
@@ -384,103 +409,284 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Portfolio */}
-      <section id="portfolio" className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className={`text-4xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              Lets have a look at my <span style={{color: '#00eeff'}}>Portfolio</span>
-            </h2>
-            <button className="orange-gradient text-white px-6 py-2 rounded-full font-medium hidden md:block">
-              See All
-            </button>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            {[1, 2].map((item) => (
-              <div key={item} className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-3xl overflow-hidden shadow-xl`}>
-                <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-200'} h-64 relative`}>
-                  <div className="absolute inset-4 grid grid-cols-3 gap-2">
-                    {[...Array(6)].map((_, i) => (
-                      <div key={i} className={`${darkMode ? 'bg-gray-600' : 'bg-gray-300'} rounded-lg`}></div>
-                    ))}
+ {/* Portfolio */}
+ <section id="portfolio" className="py-16 px-4 sm:px-6 lg:px-8">
+  <div className="max-w-7xl mx-auto">
+
+    {/* Header */}
+    <div className="flex justify-between items-center mb-8">
+      <h2 className={`text-4xl font-bold ${darkMode ? "text-white" : "text-gray-900"}`}>
+        Let's have a look at my <span className="text-cyan-400">Portfolio</span>
+      </h2>
+    </div>
+
+    {/* Category Filters */}
+    <div className="text-center mb-8">
+      <div className="flex justify-center flex-wrap gap-3 mb-8">
+        {["All", "Web Development", "Product Design", "Graphic Design"].map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setPortfolioFilter(cat)}
+            className={`px-4 py-2 rounded-full border transition-colors ${
+              darkMode
+                ? "border-gray-600 text-gray-300 hover:bg-cyan-400 hover:text-white"
+                : "border-gray-300 text-gray-700 hover:bg-cyan-400 hover:text-white"
+            } ${portfolioFilter === cat ? "bg-cyan-400 text-white" : ""}`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    {/* Slider Container */}
+    <div className="relative mb-12">
+      <div className="overflow-hidden py-8">
+        <div
+          className="flex transition-transform duration-[700ms] ease-[cubic-bezier(.22,.61,.36,1)]"
+          style={{ transform: `translateX(-${portfolioSlide * 100}%)` }}
+        >
+          {[
+            {
+              id: "card1",
+              title: "AON Studios",
+              subtitle: "Architecture/Design Website",
+              image: "/Img/design1.png",
+              category: "Product Design",
+            },
+            {
+              id: "card2",
+              title: "Agroease",
+              subtitle: "Agro E-commerce Website",
+              image: "/Img/e-commerce1.png",
+              category: "Web Development",
+            },
+            {
+              id: "card3",
+              title: "Starserv Agro",
+              subtitle: "Agricultural Empowerment Website",
+              image: "/Img/Screenshot (60).png",
+              category: "Web Development",
+            },
+            {
+              id: "card4",
+              title: "Agroease",
+              subtitle: "Agricultural Firm Website",
+              image: "/Img/agro-website1 (1).png",
+              category: "Graphic Design",
+            },
+          ]
+            .filter((item) => portfolioFilter === "All" || item.category === portfolioFilter)
+            .map((item, index) => (
+              <div key={item.id} id={item.id} className="w-full md:w-1/2 flex-shrink-0 px-4">
+
+                {/* Card */}
+                <div
+                  className={`${
+                    darkMode ? "bg-gray-800" : "bg-white"
+                  } rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow`}
+                >
+
+                  {/* SINGLE IMAGE */}
+                  <div className="w-full h-48 sm:h-64 overflow-hidden">
+                    <img
+                      src={item.image}
+                      className="w-full h-full object-cover"
+                      alt={item.title}
+                    />
                   </div>
-                </div>
-                <div className="p-6">
-                  <h3 className={`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Lirante</h3>
-                  <p style={{color: '#00eeff'}} className="font-medium">Food Delivery Solution</p>
+
+                  {/* Text Section */}
+                  <div className="p-4 sm:p-6">
+                    <h3
+                      className={`text-xl sm:text-2xl font-bold mb-1 ${
+                        darkMode ? "text-white" : "text-gray-900"
+                      }`}
+                    >
+                      {item.title}
+                    </h3>
+                    <p className="font-medium text-cyan-400 text-sm sm:text-base">
+                      {item.subtitle}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
-          </div>
-          
-          <div className="text-center mb-8">
-            <div className="flex justify-center space-x-4 mb-8">
-              {['Landing Page', 'Product Design', 'Animation', 'Illustration', 'UI/UX'].map((cat) => (
-                <button key={cat} className={`px-4 py-2 rounded-full border ${darkMode ? 'border-gray-600 text-gray-300' : 'border-gray-300 text-gray-700'} hover:bg-[#00eeff] hover:text-white hover:border-[#00eeff] transition-colors`}>
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </div>
-          
-          <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-3xl p-8 shadow-xl`}>
-            <h3 className={`text-3xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              Lirante - Food Delivery Solution
-            </h3>
-            <p className={`mb-6 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <button className="orange-gradient text-white px-6 py-2 rounded-full font-medium">
-              View Project
-            </button>
-          </div>
         </div>
-      </section>
+      </div>
+
+      {/* Dots */}
+      <div className="flex justify-center mt-8 space-x-2">
+        {[0, 1, 2].map((index) => (
+          <button
+            key={index}
+            onClick={() => setPortfolioSlide(index)}
+            className={`h-3 rounded-full transition-all ${
+              portfolioSlide === index ? "bg-cyan-400 w-8" : "bg-gray-500 w-3"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
       {/* Project CTA */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section  className={`py-16 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-gray-800' : 'bg-gray-900'} relative overflow-hidden`}>
+        {/* Background decorative elements */}
+        <div className="absolute top-0 left-0 w-96 h-96 bg-cyan-500 rounded-full filter blur-3xl opacity-20"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-400 rounded-full filter blur-3xl opacity-20"></div>
         <div className="max-w-7xl mx-auto">
-          <div className={`${darkMode ? 'bg-gray-800' : 'bg-gray-50'} rounded-3xl p-12 text-center`}>
-            <h2 className={`text-4xl font-bold mb-8 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+          <div className={`${darkMode ? 'bg-gray-800' : 'bg-gray-900'} rounded-3xl p-12 text-center`}>
+            <h2 className={`text-4xl font-bold mb-8 ${darkMode ? 'text-white' : 'text-gray-white'}`}>
               Have an Awesome Project Idea? <span style={{color: '#00eeff'}}>Let's Discuss</span>
             </h2>
-                          <div className="flex flex-wrap justify-center gap-4 mb-8">
-              <div className={`flex items-center space-x-2 px-6 py-3 rounded-full ${darkMode ? 'bg-[gray-700]' : 'bg-white'} shadow`}>
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              <div className={`flex items-center space-x-2 px-6 py-3 rounded-full ${darkMode ? 'bg-gray-700' : 'bg-white'} shadow`}>
                 <MailIcon  />
-                <span className={darkMode ? 'text-white' : 'text-[#00eeff]'}>Email me at Email.com</span>
+                <span className={darkMode ? 'text-white' : 'text-[#323946]'}>Email me at jiyoha79@gmail.com</span>
               </div>
               <div className={`flex items-center space-x-2 px-6 py-3 rounded-full ${darkMode ? 'bg-gray-700' : 'bg-white'} shadow`}>
                 <PhoneIcon />
-                <span className={darkMode ? 'text-white' : 'text-[#00eeff]'}>+91 0000000000</span>
+                <span className={darkMode ? 'text-white' : 'text-[#323946]'}>+230 5502 7213</span>
               </div>
             </div>
-            <button className="orange-gradient text-white px-8 py-3 rounded-full font-medium">
+            <button className="orange-gradient text-[#323946] px-8 py-3 rounded-full font-medium">
               Send me a message
             </button>
           </div>
         </div>
       </section>
 
-      {/* Skills Banner */}
-      <div className="orange-gradient py-4 overflow-hidden">
-        <div className="flex animate-scroll">
-          {['UX Design', 'App Design', 'Dashboard', 'Wireframe', 'User Research'].map((skill, idx) => (
-            <span key={idx} className="text-white text-xl font-bold mx-8 whitespace-nowrap">
-              {skill}
-            </span>
-          ))}
+      {/* Work Skills Section */}
+<section 
+  className={`py-20 px-4 sm:px-6 lg:px-8 ${
+    darkMode ? 'bg-gray-800' : 'bg-white'
+  }`}
+>
+  <div className="max-w-7xl mx-auto text-center">
+
+    {/* Top Label */}
+    <div className="inline-block mb-4 px-4 py-1 border border-gray-300 rounded-full">
+      <span className={darkMode ? 'text-white' : 'text-gray-700'}>
+        Skills
+      </span>
+    </div>
+
+    {/* Heading */}
+    <h2
+      className={`text-xl sm:text-2xl mb-12 ${
+        darkMode ? 'text-white' : 'text-gray-600'
+      }`}
+    >
+      The skills, tools and technologies I am really good at:
+    </h2>
+
+    {/* Skills Grid */}
+    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-10">
+
+      {[
+        { name: 'Javascript', src: '/skills/JavaScript.svg' },
+        { name: 'Typescript', src: '/skills/TypeScript.svg' },
+        { name: 'React', src: '/skills/react.svg' },
+        { name: 'Next.js', src: '/skills/next.js.svg' },
+        { name: 'Node.js', src: '/skills/node.js.svg' },
+        { name: 'Vue.js', src: '/skills/vue.js.svg' },
+        { name: 'MongoDB', src: '/skills/mongodb.svg' },
+        { name: 'Sass/Scss', src: '/skills/sass.svg' },
+        { name: 'TailwindCSS', src: '/skills/TypeScript.svg' },
+        { name: 'Figma', src: '/skills/figma.svg' },
+        { name: 'Adobe Photoshop', src: '/skills/Adobe Photoshop.svg' },
+        { name: 'Git', src: '/skills/git.svg' },
+      ].map((item, index) => (
+        <div key={index} className="flex flex-col items-center">
+          <img 
+            src={item.src} 
+            alt={item.name} 
+            className="w-14 h-14 object-contain"
+          />
+          <p className={`mt-2 text-sm ${
+            darkMode ? 'text-white' : 'text-gray-700'
+          }`}>
+            {item.name}
+          </p>
         </div>
-      </div>
+      ))}
+
+    </div>
+  </div>
+</section>
+
+
+
+
+{/* Soft Skills Section */}
+<section 
+  className={`py-20 px-4 sm:px-6 lg:px-8 ${
+    darkMode ? 'bg-gray-900' : 'bg-gray-50'
+  }`}
+>
+  <div className="max-w-7xl mx-auto text-center">
+
+    {/* Soft Skills Label */}
+    <div className="inline-block mb-4 px-4 py-1 border border-gray-400 rounded-full">
+      <span className={darkMode ? 'text-white' : 'text-gray-700'}>
+        Soft Skills
+      </span>
+    </div>
+
+    <h2
+      className={`text-xl sm:text-2xl mb-12 ${
+        darkMode ? 'text-gray-300' : 'text-gray-600'
+      }`}
+    >
+      Personal qualities that help me excel:
+    </h2>
+
+    {/* Soft Skills Grid */}
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-12">
+
+    {[
+        { name: 'Time Management', src: '/skills/time.png' },
+        { name: 'Collaboration', src: '/skills/partners.png' },
+        { name: 'Communication', src: '/skills/interaction.png' },
+        { name: 'Flexibility', src: '/skills/flexibility.png' },
+        { name: 'Project Management', src: '/skills/project.png' },
+        { name: 'Problem Solving', src: '/skills/idea.png' },
+      ].map((item, index) => (
+        <div key={index} className="flex flex-col items-center">
+          <img 
+            src={item.src} 
+            alt={item.name} 
+            className="w-14 h-14 object-contain mb-2"
+          />
+          <p className={`text-sm ${
+            darkMode ? 'text-gray-300' : 'text-gray-700'
+          }`}>
+            {item.name}
+          </p>
+        </div>
+      ))}
+
+    </div>
+  </div>
+</section>
+
 
       {/* Footer */}
-      <footer className={`py-16 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-gray-900' : 'bg-gray-900'}`}>
+      <footer  className={`py-16 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-gray-800' : 'bg-gray-900'} relative overflow-hidden`}>
+        {/* Background decorative elements */}
+        {/* <div className="absolute top-0 left-0 w-96 h-96 bg-cyan-500 rounded-full filter blur-3xl opacity-20"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-400 rounded-full filter blur-3xl opacity-20"></div> */}
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-12">
-            <div className="orange-gradient text-white px-6 py-3 rounded-full font-semibold text-xl">
+            <div className="orange-gradient text-[#323946] px-6 py-3 rounded-full font-semibold text-xl">
               JIYOHA
             </div>
-            <button className="orange-gradient text-white px-8 py-3 rounded-full font-medium">
+            <button className="orange-gradient text-[#323946] px-8 py-3 rounded-full font-medium">
               Contact Me
             </button>
           </div>
@@ -489,18 +695,18 @@ export default function Portfolio() {
             <div>
               <h4 className="text-white font-bold mb-4">Navigation</h4>
               <ul className="space-y-2">
-                <li><a href="#home" className="text-[#fff] hover:text-white">Home</a></li>
-                <li><a href="#services" className="text-[##fff] hover:text-white">About Us</a></li>
-                <li><a href="#portfolio" className="text-[##fff] hover:text-white">Services</a></li>
-                <li><a href="#blog" className="text-[##fff] hover:text-white">Resume</a></li>
+                <li><a href="#home" className="text-white hover:text-[#00eeff]">Home</a></li>
+                <li><a href="#services" className="text-white hover:text-[#00eeff]">Services</a></li>
+                <li><a href="#portfolio" className="text-white hover:text-[#00eeff]">Portfolio</a></li>
+
               </ul>
             </div>
             
             <div>
               <h4 className="text-white font-bold mb-4">Contact</h4>
               <ul className="space-y-2">
-                <li className="text-[##fff]">+91 0000000000</li>
-                <li className="text-[##fff]">hello@email.com</li>
+                <li className="text-white hover:text-[#00eeff]">+230 5502 7213</li>
+                <li className="text-white hover:text-[#00eeff]">jiyoha79@gmail.com</li>
               </ul>
             </div>
             
@@ -510,8 +716,8 @@ export default function Portfolio() {
                 <input 
                   type="email" 
                   placeholder="Email Address" 
-                  className={`flex-1 px-4 py-2 rounded-l-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-gray-800 text-white'} outline-none`}
-                />
+                  className={"flex-1 px-4 py-2 rounded-l-full bg-gray-800 text-white outline-none"
+                  }/>
                 <button className="orange-gradient text-white px-6 py-2 rounded-r-full font-medium">
                   →
                 </button>
@@ -538,7 +744,7 @@ export default function Portfolio() {
           </div>
           
           <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-[#00eeff] text-sm mb-4 md:mb-0">
+            <p className="text-[#fff] text-sm mb-4 md:mb-0">
               Copyright © 2025, Joshua Iyoha. All Rights Reserved.
             </p>
           </div>
