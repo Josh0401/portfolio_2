@@ -591,16 +591,16 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
       {[
         { name: 'Javascript', src: '/skills/JavaScript.svg' },
         { name: 'Typescript', src: '/skills/TypeScript.svg' },
-        { name: 'React', src: '/skills/react.svg' },
-        { name: 'Next.js', src: '/skills/next.js.svg' },
-        { name: 'Node.js', src: '/skills/node.js.svg' },
-        { name: 'Vue.js', src: '/skills/vue.js.svg' },
-        { name: 'MongoDB', src: '/skills/mongodb.svg' },
-        { name: 'Sass/Scss', src: '/skills/sass.svg' },
+        { name: 'React', src: '/skills/React.svg' },
+        { name: 'Next.js', src: '/skills/Next.js.svg' },
+        { name: 'Node.js', src: '/skills/Node.js.svg' },
+        { name: 'Vue.js', src: '/skills/Vue.js.svg' },
+        { name: 'MongoDB', src: '/skills/MongoDB.svg' },
+        { name: 'Sass/Scss', src: '/skills/Sass.svg' },
         { name: 'TailwindCSS', src: '/skills/TypeScript.svg' },
-        { name: 'Figma', src: '/skills/figma.svg' },
+        { name: 'Figma', src: '/skills/Figma.svg' },
         { name: 'Adobe Photoshop', src: '/skills/Adobe Photoshop.svg' },
-        { name: 'Git', src: '/skills/git.svg' },
+        { name: 'Git', src: '/skills/Git.svg' },
       ].map((item, index) => (
         <div key={index} className="flex flex-col items-center">
           <img 
