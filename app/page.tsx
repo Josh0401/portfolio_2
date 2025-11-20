@@ -7,8 +7,7 @@ export default function Portfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesSlide, setServicesSlide] = useState(0);
   const [portfolioSlide, setPortfolioSlide] = useState(0);
-const [portfolioFilter, setPortfolioFilter] = useState("All");
-
+  const [portfolioFilter, setPortfolioFilter] = useState("All");
 
   useEffect(() => {
     if (darkMode) {
@@ -73,6 +72,56 @@ const [portfolioFilter, setPortfolioFilter] = useState("All");
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
     </svg>
   );
+
+  // ---------------------
+  // Swipe support (Next.js-ready)
+  // ---------------------
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchEndX, setTouchEndX] = useState<number | null>(null);
+
+  const minSwipeDistance = 50; // pixels
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.targetTouches[0].clientX);
+    setTouchEndX(null);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleServiceSwipe = () => {
+    if (touchStartX === null || touchEndX === null) return;
+    const distance = touchStartX - touchEndX;
+
+    if (distance > minSwipeDistance) {
+      // swipe left -> next
+      setServicesSlide((prev) => Math.min(prev + 1, 2));
+    } else if (distance < -minSwipeDistance) {
+      // swipe right -> prev
+      setServicesSlide((prev) => Math.max(prev - 1, 0));
+    }
+
+    setTouchStartX(null);
+    setTouchEndX(null);
+  };
+
+  const handlePortfolioSwipe = () => {
+    if (touchStartX === null || touchEndX === null) return;
+    const distance = touchStartX - touchEndX;
+
+    if (distance > minSwipeDistance) {
+      setPortfolioSlide((prev) => Math.min(prev + 1, 2));
+    } else if (distance < -minSwipeDistance) {
+      setPortfolioSlide((prev) => Math.max(prev - 1, 0));
+    }
+
+    setTouchStartX(null);
+    setTouchEndX(null);
+  };
+  // ---------------------
+  // End swipe support
+  // ---------------------
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
@@ -218,7 +267,13 @@ const [portfolioFilter, setPortfolioFilter] = useState("All");
     </p>
 
     <div className="relative">
-      <div className="overflow-hidden">
+      {/* ========== Swipable Services Slider ========== */}
+      <div
+        className="overflow-hidden"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleServiceSwipe}
+      >
         <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${servicesSlide * 100}%)` }}
@@ -261,6 +316,7 @@ const [portfolioFilter, setPortfolioFilter] = useState("All");
           ))}
         </div>
       </div>
+      {/* ============================================== */}
     </div>
   </div>
 </section>
@@ -517,7 +573,13 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
 
     {/* Slider Container */}
     <div className="relative mb-12">
-      <div className="overflow-hidden py-8">
+      {/* ========== Swipable Portfolio Slider ========== */}
+      <div
+        className="overflow-hidden py-8"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handlePortfolioSwipe}
+      >
         <div
           className="flex transition-transform duration-[700ms] ease-[cubic-bezier(.22,.61,.36,1)]"
           style={{ transform: `translateX(-${portfolioSlide * 100}%)` }}
@@ -590,6 +652,7 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
             ))}
         </div>
       </div>
+      {/* ============================================== */}
 
       {/* Dots */}
       <div className="flex justify-center mt-8 space-x-2">
