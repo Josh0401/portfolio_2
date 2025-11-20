@@ -1,6 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { FaBehance, FaLinkedinIn, FaGithub } from "react-icons/fa";
+import { FaInstagram  } from "react-icons/fa6";
+
 
 export default function Portfolio() {
   const [darkMode, setDarkMode] = useState(false);
@@ -8,6 +11,30 @@ export default function Portfolio() {
   const [servicesSlide, setServicesSlide] = useState(0);
   const [portfolioSlide, setPortfolioSlide] = useState(0);
   const [portfolioFilter, setPortfolioFilter] = useState("All");
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+
+  useEffect(() => {
+    if (!isMobile) return; // only mobile
+    const interval = setInterval(() => {
+      setServicesSlide((prev) =>
+        prev + 1 > 2 ? 0 : prev + 1 // because you have 3 service slides
+      );
+    }, 3500);
+  
+    return () => clearInterval(interval);
+  }, [isMobile]);
+  
+
+
 
   useEffect(() => {
     if (darkMode) {
@@ -72,57 +99,58 @@ export default function Portfolio() {
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
     </svg>
   );
-
-  // ---------------------
-  // Swipe support (Next.js-ready)
-  // ---------------------
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [touchEndX, setTouchEndX] = useState<number | null>(null);
-
-  const minSwipeDistance = 50; // pixels
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.targetTouches[0].clientX);
-    setTouchEndX(null);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEndX(e.targetTouches[0].clientX);
-  };
-
-  const handleServiceSwipe = () => {
-    if (touchStartX === null || touchEndX === null) return;
-    const distance = touchStartX - touchEndX;
-
-    if (distance > minSwipeDistance) {
-      // swipe left -> next
-      setServicesSlide((prev) => Math.min(prev + 1, 2));
-    } else if (distance < -minSwipeDistance) {
-      // swipe right -> prev
-      setServicesSlide((prev) => Math.max(prev - 1, 0));
-    }
-
-    setTouchStartX(null);
-    setTouchEndX(null);
-  };
-
-  const handlePortfolioSwipe = () => {
-    if (touchStartX === null || touchEndX === null) return;
-    const distance = touchStartX - touchEndX;
-
-    if (distance > minSwipeDistance) {
-      setPortfolioSlide((prev) => Math.min(prev + 1, 2));
-    } else if (distance < -minSwipeDistance) {
-      setPortfolioSlide((prev) => Math.max(prev - 1, 0));
-    }
-
-    setTouchStartX(null);
-    setTouchEndX(null);
-  };
-  // ---------------------
-  // End swipe support
-  // ---------------------
-
+  const portfolioItems = [
+    {
+      id: "card1",
+      title: "AON Studios",
+      subtitle: "Architecture/Design Website",
+      image: "/Img/design1.png",
+      category: "Product Design",
+    },
+    {
+      id: "card2",
+      title: "Agroease",
+      subtitle: "Agro E-commerce Website",
+      image: "/Img/e-commerce1.png",
+      category: "Web Development",
+    },
+    {
+      id: "card3",
+      title: "Starserv Agro",
+      subtitle: "Agricultural Empowerment Website",
+      image: "/Img/Screenshot (60).png",
+      category: "Web Development",
+    },
+    {
+      id: "card4",
+      title: "Agroease",
+      subtitle: "Agricultural Firm Website",
+      image: "/Img/agro-website1 (1).png",
+      category: "Graphic Design",
+    },
+  ];
+  
+  const filteredPortfolio = portfolioItems.filter(
+    (item) => portfolioFilter === "All" || item.category === portfolioFilter
+  );
+  
+  const totalPortfolioSlides =
+    filteredPortfolio.length <= 2
+      ? 1
+      : Math.ceil(filteredPortfolio.length / 2);
+  
+  // IMPORTANT — This must be at top level
+  useEffect(() => {
+    if (filteredPortfolio.length <= 2) return; // don't auto-slide if no real carousel
+  
+    const interval = setInterval(() => {
+      setPortfolioSlide((prev) =>
+        prev + 1 >= totalPortfolioSlides ? 0 : prev + 1
+      );
+    }, 4000);
+  
+    return () => clearInterval(interval);
+  }, [filteredPortfolio, totalPortfolioSlides]);
   return (
     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
       <style jsx global>{`
@@ -162,9 +190,13 @@ export default function Portfolio() {
               >
                 {darkMode ? <SunIcon /> : <MoonIcon />}
               </button>
-              <button className="orange-gradient text-[#323946] px-6 py-2 rounded-full font-medium">
-                Contact
-              </button>
+              <button
+  className="orange-gradient text-[#323946] px-6 py-2 rounded-full font-medium"
+  onClick={() => window.location.href = "mailto:jiyoha79@gmail.com"}
+>
+  Contact
+</button>
+
             </div>
 
             {/* Mobile Menu Button */}
@@ -189,9 +221,12 @@ export default function Portfolio() {
               <a href="#home" className={`block px-3 py-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Home</a>
               <a href="#services" className={`block px-3 py-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Services</a>
               <a href="#portfolio" className={`block px-3 py-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Portfolio</a>
-              <button className="orange-gradient text-[#323946] px-6 py-2 rounded-full font-medium w-full">
-                Contact
-              </button>
+              <button
+  className="orange-gradient text-[#323946] px-6 py-2 rounded-full font-medium"
+  onClick={() => window.location.href = "mailto:jiyoha79@gmail.com"}
+>
+  Contact
+</button>
             </div>
           </div>
         )}
@@ -203,7 +238,7 @@ export default function Portfolio() {
           <div className="flex flex-col lg:flex-row items-center justify-between">
             <div className="lg:w-1/2 mb-8 lg:mb-0">
               <div className="inline-block mb-4 px-4 py-1 border-2 border-gray-300 dark:border-gray-600 rounded-full">
-                <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>HIRE</span>
+                <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>HI</span>
               </div>
               <h1 className={`text-5xl lg:text-6xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                 I'm <span style={{color: '#00eeff'}}>Joshua</span>,
@@ -211,38 +246,70 @@ export default function Portfolio() {
               <h2 className={`text-4xl lg:text-5xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                 A FullStack Developer and Graphic Designer
               </h2>
-              <button className="orange-gradient text-[#323946] px-8 py-3 rounded-full font-medium flex items-center space-x-2">
-                <span>Portfolio</span>
-                <ArrowRightIcon />
-              </button>
+              <a href="/IYOHA_JOSHUA_CV.pdf" download>
+  <button className="orange-gradient text-[#323946] px-8 py-3 rounded-full font-medium flex items-center space-x-2">
+    <span>Download CV</span>
+    <ArrowRightIcon />
+  </button>
+</a>
+
             </div>
             <div className="lg:w-1/2 relative">
-              <div className="relative w-80 h-80 mx-auto">
-                <div className="absolute inset-0 rounded-full" style={{background: '#00eeff', opacity: 0.2}}></div>
-                <div className="absolute inset-8 rounded-full overflow-hidden" style={{ background: '#00eeff' }}>
-  {/* Background image */}
-  <img
-    src="/Img/Award.png"
-    alt="Background"
-    className="w-full h-full object-cover object-center"
-  />
+  <div className="relative w-80 h-80 mx-auto">
+    {/* Outer glow circle */}
+    <div
+      className="absolute inset-0 rounded-full"
+      style={{ background: "#00eeff", opacity: 0.2 }}
+    ></div>
 
-  {/* Gray overlay & content */}
-  <div className={`absolute inset-0 flex items-center justify-center ${darkMode ? 'bg-gray-700/60' : 'bg-gray-200/70'}`}>
-    <div className="text-center">
-      <div className="flex items-center justify-center space-x-1 mb-2">
-        {[...Array(5)].map((_, i) => (
-          <span key={i} className="text-yellow-400">★</span>
-        ))}
+    {/* Inner clipped circle */}
+    <div
+      className="absolute inset-8 rounded-full overflow-hidden"
+      style={{ background: "#00eeff" }}
+    >
+      {/* Clipped Image */}
+      <img
+        src="/Img/Award.png"
+        alt="Background"
+        className="w-full h-full object-cover object-center rounded-full"
+      />
+
+      {/* Gray overlay & content */}
+      <div
+        className={`absolute inset-0 flex items-center justify-center ${
+          darkMode ? "bg-gray-700/60" : "bg-gray-200/70"
+        }`}
+      >
+        <div className="text-center">
+          <div className="flex items-center justify-center space-x-1 mb-2">
+            {[...Array(5)].map((_, i) => (
+              <span key={i} className="text-yellow-400">
+                ★
+              </span>
+            ))}
+          </div>
+
+          <div
+            className={`text-3xl font-bold ${
+              darkMode ? "text-white" : "text-gray-900"
+            }`}
+          >
+            4+ Years
+          </div>
+
+          <div
+            className={`text-sm ${
+              darkMode ? "text-white" : "text-gray-600"
+            }`}
+          >
+            Experience
+          </div>
+        </div>
       </div>
-      <div className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>4+ Years</div>
-      <div className={`text-sm ${darkMode ? 'text-white' : 'text-gray-600'}`}>Experience</div>
     </div>
   </div>
 </div>
 
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -267,13 +334,7 @@ export default function Portfolio() {
     </p>
 
     <div className="relative">
-      {/* ========== Swipable Services Slider ========== */}
-      <div
-        className="overflow-hidden"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleServiceSwipe}
-      >
+      <div className="overflow-hidden">
         <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${servicesSlide * 100}%)` }}
@@ -285,7 +346,7 @@ export default function Portfolio() {
             },
             {
               title: "Graphic Design",
-              image: "/Img/New One.jpg",
+              image: "/Img/New One.png",
             },
             {
               title: "Brand Design",
@@ -316,7 +377,6 @@ export default function Portfolio() {
           ))}
         </div>
       </div>
-      {/* ============================================== */}
     </div>
   </div>
 </section>
@@ -479,7 +539,7 @@ export default function Portfolio() {
             <div className="md:w-1/2 pl-8">
               <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg border-l-4 inline-block`}
                 style={{borderColor: '#545454'}}>
-                <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>StevenHills Limited, Mauritius</h3>
+                <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Kirawa Limited, Mauritius</h3>
                 <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>Sep 2025 - Present</p>
                 <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>IT Administrator & Graphic Designer</p>
               </div>
@@ -533,7 +593,7 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
                 </div>
               </div>
               
-              <button className="orange-gradient text-[#323946] px-8 py-3 rounded-full font-medium">
+              <button className="orange-gradient text-[#323946] px-8 py-3 rounded-full font-medium" onClick={() => window.location.href = "mailto:jiyoha79@gmail.com"}>
                 Hire me
               </button>
             </div>
@@ -542,7 +602,7 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
       </section>
 
  {/* Portfolio */}
- <section id="portfolio" className="py-16 px-4 sm:px-6 lg:px-8">
+<section id="portfolio" className="py-16 px-4 sm:px-6 lg:px-8">
   <div className="max-w-7xl mx-auto">
 
     {/* Header */}
@@ -571,70 +631,105 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
       </div>
     </div>
 
-    {/* Slider Container */}
-    <div className="relative mb-12">
-      {/* ========== Swipable Portfolio Slider ========== */}
-      <div
-        className="overflow-hidden py-8"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handlePortfolioSwipe}
-      >
-        <div
-          className="flex transition-transform duration-[700ms] ease-[cubic-bezier(.22,.61,.36,1)]"
-          style={{ transform: `translateX(-${portfolioSlide * 100}%)` }}
-        >
-          {[
-            {
-              id: "card1",
-              title: "AON Studios",
-              subtitle: "Architecture/Design Website",
-              image: "/Img/design1.png",
-              category: "Product Design",
-            },
-            {
-              id: "card2",
-              title: "Agroease",
-              subtitle: "Agro E-commerce Website",
-              image: "/Img/e-commerce1.png",
-              category: "Web Development",
-            },
-            {
-              id: "card3",
-              title: "Starserv Agro",
-              subtitle: "Agricultural Empowerment Website",
-              image: "/Img/Screenshot (60).png",
-              category: "Web Development",
-            },
-            {
-              id: "card4",
-              title: "Agroease",
-              subtitle: "Agricultural Firm Website",
-              image: "/Img/agro-website1 (1).png",
-              category: "Graphic Design",
-            },
-          ]
-            .filter((item) => portfolioFilter === "All" || item.category === portfolioFilter)
-            .map((item, index) => (
-              <div key={item.id} id={item.id} className="w-full md:w-1/2 flex-shrink-0 px-4">
+    {/* Logic */}
+    {(() => {
+  const items = [
+    {
+      id: "card1",
+      title: "AON Studios",
+      subtitle: "Architecture/Design Website",
+      image: "/Img/design1.png",
+      category: "Product Design",
+    },
+    {
+      id: "card2",
+      title: "Agroease",
+      subtitle: "Agro E-commerce Website",
+      image: "/Img/e-commerce1.png",
+      category: "Web Development",
+    },
+    {
+      id: "card3",
+      title: "Starserv Agro",
+      subtitle: "Agricultural Empowerment Website",
+      image: "/Img/Screenshot (60).png",
+      category: "Web Development",
+    },
+    {
+      id: "card4",
+      title: "Agroease",
+      subtitle: "Agricultural Firm Website",
+      image: "/Img/agro-website1 (1).png",
+      category: "Graphic Design",
+    },
+  ];
 
-                {/* Card */}
+  const filteredItems = items.filter(
+    (item) => portfolioFilter === "All" || item.category === portfolioFilter
+  );
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const itemsPerSlide = isMobile ? 1 : 2;
+  const totalSlides = Math.ceil(filteredItems.length / itemsPerSlide);
+
+  // Reset slide on filter change
+  useEffect(() => {
+    setPortfolioSlide(0);
+  }, [portfolioFilter]);
+
+  // --- AUTOPLAY FIX ---
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPortfolioSlide((prev) => {
+        if (prev + 1 >= totalSlides) return 0;
+        return prev + 1;
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [totalSlides, isMobile]);
+
+  return (
+    <>
+      {/* Slider */}
+      <div className="relative mb-12">
+        <div className="overflow-hidden py-8">
+          <div
+            className="flex transition-transform duration-[700ms] ease-[cubic-bezier(.22,.61,.36,1)]"
+            style={{
+              transform: `translateX(-${portfolioSlide * 100}%)`,
+            }}
+          >
+            {filteredItems.map((item) => (
+              <div
+                key={item.id}
+                className={`${isMobile ? "w-full" : "w-1/2"} flex-shrink-0 px-4`}
+              >
                 <div
                   className={`${
                     darkMode ? "bg-gray-800" : "bg-white"
                   } rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow`}
                 >
-
-                  {/* SINGLE IMAGE */}
                   <div className="w-full h-48 sm:h-64 overflow-hidden">
                     <img
                       src={item.image}
-                      className="w-full h-full object-cover"
                       alt={item.title}
+                      className="w-full h-full object-cover"
                     />
                   </div>
 
-                  {/* Text Section */}
                   <div className="p-4 sm:p-6">
                     <h3
                       className={`text-xl sm:text-2xl font-bold mb-1 ${
@@ -650,28 +745,28 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Dots */}
+        <div className="flex justify-center mt-8 space-x-2">
+          {Array.from({ length: totalSlides }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setPortfolioSlide(index)}
+              className={`h-3 rounded-full transition-all ${
+                portfolioSlide === index ? "bg-cyan-400 w-8" : "bg-gray-500 w-3"
+              }`}
+            />
+          ))}
         </div>
       </div>
-      {/* ============================================== */}
+    </>
+  );
+})()}
 
-      {/* Dots */}
-      <div className="flex justify-center mt-8 space-x-2">
-        {[0, 1, 2].map((index) => (
-          <button
-            key={index}
-            onClick={() => setPortfolioSlide(index)}
-            className={`h-3 rounded-full transition-all ${
-              portfolioSlide === index ? "bg-cyan-400 w-8" : "bg-gray-500 w-3"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
-    </div>
   </div>
 </section>
-
-
 
       {/* Project CTA */}
       <section  className={`py-16 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-gray-800' : 'bg-gray-900'} relative overflow-hidden`}>
@@ -693,7 +788,7 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
                 <span className={darkMode ? 'text-white' : 'text-[#323946]'}>+230 5502 7213</span>
               </div>
             </div>
-            <button className="orange-gradient text-[#323946] px-8 py-3 rounded-full font-medium">
+            <button className="orange-gradient text-[#323946] px-8 py-3 rounded-full font-medium" onClick={() => window.location.href = "mailto:jiyoha79@gmail.com"}>
               Send me a message
             </button>
           </div>
@@ -825,9 +920,7 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
             <div className="orange-gradient text-[#323946] px-6 py-3 rounded-full font-semibold text-xl">
               JIYOHA
             </div>
-            <button className="orange-gradient text-[#323946] px-8 py-3 rounded-full font-medium">
-              Contact Me
-            </button>
+           
           </div>
           
           <div className="grid md:grid-cols-4 gap-8 mb-12">
@@ -844,41 +937,60 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
             <div>
               <h4 className="text-white font-bold mb-4">Contact</h4>
               <ul className="space-y-2">
-                <li className="text-white hover:text-[#00eeff]">+230 5502 7213</li>
-                <li className="text-white hover:text-[#00eeff]">jiyoha79@gmail.com</li>
+                <li className="text-white hover:text-[#00eeff]">
+  <a href="tel:+23055027213">+230 5502 7213</a>
+</li>
+
+<li className="text-white hover:text-[#00eeff]">
+  <a href="mailto:jiyoha79@gmail.com">jiyoha79@gmail.com</a>
+</li>
+
               </ul>
             </div>
             
             <div>
-              <h4 className="text-white font-bold mb-4">Get the latest information</h4>
-              <div className="flex">
-                <input 
-                  type="email" 
-                  placeholder="Email Address" 
-                  className={"flex-1 px-4 py-2 rounded-l-full bg-gray-800 text-white outline-none"
-                  }/>
-                <button className="orange-gradient text-white px-6 py-2 rounded-r-full font-medium">
-                  →
-                </button>
-              </div>
+              
             </div>
-            
             <div>
               <h4 className="text-white font-bold mb-4">Social</h4>
               <div className="flex space-x-4">
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-[#00eeff] transition-colors">
-                  f
-                </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-[#00eeff] transition-colors">
-                  in
-                </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-[#00eeff] transition-colors">
-                  tw
-                </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-[#00eeff] transition-colors">
-                  ig
-                </a>
-              </div>
+  <a
+    href="https://www.behance.net/joshuaiyoha"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-[#00eeff] transition-colors"
+  >
+    <FaBehance size={20} />
+  </a>
+
+  <a
+    href="https://www.linkedin.com/in/joshua-iyoha-908683184/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-[#00eeff] transition-colors"
+  >
+    <FaLinkedinIn size={20} />
+  </a>
+
+  <a
+    href="https://www.instagram.com/designsby.jay_/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-[#00eeff] transition-colors"
+  >
+    <FaInstagram  size={20} />
+  </a>
+
+  <a
+    href="https://github.com/Josh0401"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-[#00eeff] transition-colors"
+  >
+    <FaGithub size={20} />
+  </a>
+</div>
+
             </div>
           </div>
           
