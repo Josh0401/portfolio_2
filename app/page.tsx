@@ -246,7 +246,7 @@ export default function Portfolio() {
               <h2 className={`text-4xl lg:text-5xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                 A FullStack Developer and Graphic Designer
               </h2>
-              <a href="/IYOHA_JOSHUA_CV.pdf" download>
+              <a href="/CV/IYOHA_JOSHUA_CV.pdf" download>
   <button className="orange-gradient text-[#323946] px-8 py-3 rounded-full font-medium flex items-center space-x-2">
     <span>Download CV</span>
     <ArrowRightIcon />
