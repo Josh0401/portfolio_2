@@ -11,6 +11,21 @@ export default function Portfolio() {
   const [servicesSlide, setServicesSlide] = useState(0);
   const [portfolioSlide, setPortfolioSlide] = useState(0);
   const [portfolioFilter, setPortfolioFilter] = useState("All");
+  const [showModal, setShowModal] = useState(false);
+  interface Project {
+      id: string;
+      title: string;
+      subtitle: string;
+      image: string;
+      images?: string[];
+      category: string;
+      description: string;
+      stack: string[];
+      colors?: string[]; // Make colors optional
+  }
+  
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -102,30 +117,32 @@ export default function Portfolio() {
   const portfolioItems = [
     {
       id: "card1",
-      title: "AON Studios",
-      subtitle: "Architecture/Design Website",
-      image: "/Img/design1.png",
-      category: "Product Design",
-    },
-    {
-      id: "card2",
       title: "Agroease",
       subtitle: "Agro E-commerce Website",
       image: "/Img/e-commerce1.png",
       category: "Web Development",
     },
     {
+      id: "card2",
+      title: "Mcdelyt",
+      subtitle: "Brand Design",
+      image: "/Img/Bay.webp",
+      category: "Product Design",
+      description: "A sophisticated brand identity design for Mcdelyt, focusing on modern aesthetics and clean presentation.",
+      stack: ["Adobe Illustrator", "Adobe Photoshop"],
+    },
+    {
       id: "card3",
-      title: "Starserv Agro",
-      subtitle: "Agricultural Empowerment Website",
-      image: "/Img/Screenshot (60).png",
-      category: "Web Development",
+      title: "AON Studios",
+      subtitle: "Architecture/Design Website",
+      image: "/Img/design1.png",
+      category: "Product Design",
     },
     {
       id: "card4",
-      title: "Agroease",
-      subtitle: "Agricultural Firm Website",
-      image: "/Img/agro-website1 (1).png",
+      title: "Church Poster Design",
+      subtitle: "Graphic Design",
+      image: "/Img/War.webp",
       category: "Graphic Design",
     },
   ];
@@ -613,217 +630,397 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
     </div>
 
     {/* Category Filters */}
-    <div className="text-center mb-8">
-      <div className="flex justify-center flex-wrap gap-3 mb-8">
-        {["All", "Web Development", "Product Design", "Graphic Design"].map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setPortfolioFilter(cat)}
-            className={`px-4 py-2 rounded-full border transition-colors ${
-              darkMode
-                ? "border-gray-600 text-gray-300 hover:bg-cyan-400 hover:text-white"
-                : "border-gray-300 text-gray-700 hover:bg-cyan-400 hover:text-white"
-            } ${portfolioFilter === cat ? "bg-cyan-400 text-white" : ""}`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-    </div>
-
-    {/* Logic */}
-    {(() => {
-  const items = [
-    {
-      id: "card1",
-      title: "AON Studios",
-      subtitle: "Architecture/Design Website",
-      image: "/Img/design1.webp",
-      category: "Web Development",
-    },
-    {
-      id: "card2",
-      title: "Mcdelyt",
-      subtitle: "Brand Design",
-      image: "/Img/Bay.webp",
-      category: "Product Design",
-    },
-    {
-      id: "card3",
-      title: "Agroease",
-      subtitle: "Agro E-commerce Website",
-      image: "/Img/e-commerce1.webp",
-      category: "Web Development",
-    },
-    {
-      id: "card4",
-      title: "Church Poster Design",
-      subtitle: "Graphic Design",
-      image: "/Img/War.webp",
-      category: "Graphic Design",
-    },
-    {
-      id: "card5",
-      title: "Agroease",
-      subtitle: "Agricultural Firm Website",
-      image: "/Img/agro-website1 (1).webp",
-      category: "Web Development",
-    },
-    {
-      id: "card6",
-      title: "Currently.ng",
-      subtitle: "Current Affairs Website",
-      image: "/Img/Currently.webp",
-      category: "Web Development",
-    },
-    {
-      id: "card7",
-      title: "Mcdelyt",
-      subtitle: "Brand Design",
-      image: "/Img/gar.webp",
-      category: "Product Design",
-    },
-    {
-      id: "card8",
-      title: "Agroconnect",
-      subtitle: "Agricultural Firm Website",
-      image: "/Img/Agroconnect.webp",
-      category: "Web Development",
-    },
-    {
-      id: "card9",
-      title: "Campaign Poster",
-      subtitle: "Graphic Design",
-      image: "/Img/New One.webp",
-      category: "Graphic Design",
-    },
-    {
-      id: "card10",
-      title: "Mcdelyt",
-      subtitle: "Brand Design",
-      image: "/Img/Gin.webp",
-      category: "Product Design",
-    },
-    {
-      id: "card11",
-      title: "Starserv Agro",
-      subtitle: "Agricultural Empowerment Website",
-      image: "/Img/Screenshot (60).webp",
-      category: "Web Development",
-    },
-    {
-      id: "card12",
-      title: "Chai.",
-      subtitle: "Coffee Shop Website",
-      image: "/Img/Coffee Shop.webp",
-      category: "Web Development",
-    },
-  ];
-
-  const filteredItems = items.filter(
-    (item) => portfolioFilter === "All" || item.category === portfolioFilter
-  );
-
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Detect mobile
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const itemsPerSlide = isMobile ? 1 : 2;
-  const totalSlides = Math.ceil(filteredItems.length / itemsPerSlide);
-
-  // Reset slide on filter change
-  useEffect(() => {
-    setPortfolioSlide(0);
-  }, [portfolioFilter]);
-
-  // --- AUTOPLAY FIX ---
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPortfolioSlide((prev) => {
-        if (prev + 1 >= totalSlides) return 0;
-        return prev + 1;
-      });
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [totalSlides, isMobile]);
-
-  return (
-    <>
-      {/* Slider */}
-      <div className="relative mb-12">
-        <div className="overflow-hidden py-8">
-          <div
-            className="flex transition-transform duration-[700ms] ease-[cubic-bezier(.22,.61,.36,1)]"
-            style={{
-              transform: `translateX(-${portfolioSlide * 100}%)`,
-            }}
-          >
-            {filteredItems.map((item) => (
-              <div
-                key={item.id}
-                className={`${isMobile ? "w-full" : "w-1/2"} flex-shrink-0 px-4`}
+        <div className="text-center mb-8">
+          <div className="flex justify-center flex-wrap gap-3 mb-8">
+            {["All", "Web Development", "Product Design", "Graphic Design"].map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setPortfolioFilter(cat)}
+                className={`px-4 py-2 rounded-full border transition-colors ${
+                  darkMode
+                    ? "border-gray-600 text-gray-300 hover:bg-cyan-400 hover:text-white"
+                    : "border-gray-300 text-gray-700 hover:bg-cyan-400 hover:text-white"
+                } ${portfolioFilter === cat ? "bg-cyan-400 text-white" : ""}`}
               >
-                <div
-                  className={`${
-                    darkMode ? "bg-gray-800" : "bg-white"
-                  } rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow`}
-                >
-                  <div className="w-full h-48 sm:h-64 overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-
-                  <div className="p-4 sm:p-6">
-                    <h3
-                      className={`text-xl sm:text-2xl font-bold mb-1 ${
-                        darkMode ? "text-white" : "text-gray-900"
-                      }`}
-                    >
-                      {item.title}
-                    </h3>
-                    <p className="font-medium text-cyan-400 text-sm sm:text-base">
-                      {item.subtitle}
-                    </p>
-                  </div>
-                </div>
-              </div>
+                {cat}
+              </button>
             ))}
           </div>
         </div>
 
-        {/* Dots */}
-        <div className="flex justify-center mt-8 space-x-2">
-          {Array.from({ length: totalSlides }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setPortfolioSlide(index)}
-              className={`h-3 rounded-full transition-all ${
-                portfolioSlide === index ? "bg-cyan-400 w-8" : "bg-gray-500 w-3"
-              }`}
-            />
-          ))}
-        </div>
+        {/* Logic */}
+        {(() => {
+          const items: Array<{
+            id: string;
+            title: string;
+            subtitle: string;
+            image: string;
+            images?: string[];
+            category: string;
+            description: string;
+            stack: string[];
+            colors?: string[];
+          }> = [
+            {
+              id: "card1",
+              title: "Agroease",
+              subtitle: "Agro E-commerce Website",
+              image: "/Img/e-commerce1.webp",
+              images: [
+                "/Img/e-commerce1.webp",
+                // "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800",
+                // "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800"
+              ],
+              category: "Web Development",
+              description: "An e-commerce platform designed for agricultural products with seamless shopping experience.",
+              stack: ["React.js", "Node.js", "MongoDB"],
+            },
+            {
+              id: "card2",
+              title: "Mcdelyt",
+              subtitle: "Brand Design",
+              image: "/Img/Bay.webp",
+              category: "Product Design",
+              description: "A sophisticated brand identity design for Mcdelyt, focusing on modern aesthetics and clean presentation.",
+              stack: ["Adobe Illustrator", "Adobe Photoshop"],
+            },
+            {
+              id: "card3",
+              title: "AON Studios",
+              subtitle: "Architecture/Design Website",
+              image: "/Img/design1.webp",
+              category: "Web Development",
+              description: "A modern architecture and interior design website showcasing stunning portfolios and services.",
+              stack: ["HTML5", "CSS3", "JavaScript"],
+            },
+            {
+              id: "card4",
+              title: "Church Poster Design",
+              subtitle: "Graphic Design",
+              image: "/Img/War.webp",
+              category: "Graphic Design",
+              description: "Engaging church event poster with powerful imagery and bold typography.",
+              stack: ["Adobe Photoshop"],
+            },
+            {
+              id: "card5",
+              title: "Agroease",
+              subtitle: "Agricultural Firm Website",
+              image: "/Img/agro-website1 (1).webp",
+              images: [
+                "/Img/agro-website1 (1).webp",
+                // "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800",
+                // "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800"
+              ],
+              category: "Web Development",
+              description: "Corporate website for an agricultural firm showcasing services and products.",
+              stack: ["Htnl5", "Css3", "Bootstrap"],
+            },
+            {
+              id: "card6",
+              title: "Currently.ng",
+              subtitle: "Current Affairs Website",
+              image: "/Img/Currently.webp",
+              images: [
+                "/Img/Currently.webp",
+                // "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=800",
+                // "https://images.unsplash.com/photo-1523995462485-3d171b5c8fa9?w=800"
+              ],
+              category: "Web Development",
+              description: "A news and current affairs platform delivering the latest updates and articles.",
+              stack: ["Vue.js", "TailwindCSS"],
+            },
+            {
+              id: "card7",
+              title: "Mcdelyt",
+              subtitle: "Brand Design",
+              image: "/Img/Gin.webp",
+              category: "Product Design",
+              description: "Brand packaging design with elegant visuals and attention to detail.",
+              stack: ["Adobe Photoshop"],
+            },
+            {
+              id: "card8",
+              title: "Agroconnect",
+              subtitle: "Agricultural Website",
+              image: "/Img/Agroconnect.webp",
+              images: [
+                "/Img/Agroconnect.webp",
+                // "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800",
+                // "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800"
+              ],
+              category: "Web Development",
+              description: "Platform connecting farmers with resources and market opportunities.",
+              stack: ["Vue.js", "Node.js", "MongoDB"],
+            },
+            {
+              id: "card9",
+              title: "Campaign Poster",
+              subtitle: "Graphic Design",
+              image: "/Img/New One.webp",
+              category: "Graphic Design",
+              description: "Political campaign poster with impactful messaging and bold design.",
+              stack: ["Adobe Photoshop"],
+            },
+            {
+              id: "card10",
+              title: "Mcdelyt",
+              subtitle: "Brand Design",
+              image: "/Img/gar.webp",
+              category: "Product Design",
+              description: "Premium brand design focusing on luxury and sophistication.",
+              stack: ["Adobe Photoshop"],
+            },
+            {
+              id: "card11",
+              title: "Starserv Agro",
+              subtitle: "Agricultural Empowerment Website",
+              image: "/Img/Screenshot (60).webp",
+              category: "Web Development",
+              description: "Empowering farmers through digital solutions and training resources.",
+              stack: ["Wordpress"],
+            },
+            {
+              id: "card12",
+              title: "Chai.",
+              subtitle: "Coffee Shop Website",
+              image: "/Img/Coffee Shop.webp",
+              images: [
+                "/Img/Coffee Shop.webp",
+                // "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800",
+                // "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=800"
+              ],
+              category: "Web Development",
+              description: "Cozy coffee shop website with menu, online ordering, and location info.",
+              stack: ["Vue.js", "Tailwind Css"],
+            },
+          ];
+
+          const filteredItems = items.filter(
+            (item) => portfolioFilter === "All" || item.category === portfolioFilter
+          );
+
+          const [isMobile, setIsMobile] = useState(false);
+
+          // Detect mobile
+          useEffect(() => {
+            const handleResize = () => {
+              setIsMobile(window.innerWidth < 768);
+            };
+
+            handleResize();
+            window.addEventListener("resize", handleResize);
+            return () => window.removeEventListener("resize", handleResize);
+          }, []);
+
+          const itemsPerSlide = isMobile ? 1 : 2;
+          const totalSlides = Math.ceil(filteredItems.length / itemsPerSlide);
+
+          // Reset slide on filter change
+          useEffect(() => {
+            setPortfolioSlide(0);
+          }, [portfolioFilter]);
+
+          // Autoplay
+          useEffect(() => {
+            const interval = setInterval(() => {
+              setPortfolioSlide((prev) => {
+                if (prev + 1 >= totalSlides) return 0;
+                return prev + 1;
+              });
+            }, 4000);
+
+            return () => clearInterval(interval);
+          }, [totalSlides, isMobile]);
+
+          return (
+            <>
+              {/* Slider */}
+              <div className="relative mb-12">
+                <div className="overflow-hidden py-8">
+                  <div
+                    className="flex transition-transform duration-[700ms] ease-[cubic-bezier(.22,.61,.36,1)]"
+                    style={{
+                      transform: `translateX(-${portfolioSlide * 100}%)`,
+                    }}
+                  >
+                    {filteredItems.map((item) => (
+                      <div
+                        key={item.id}
+                        className={`${isMobile ? "w-full" : "w-1/2"} flex-shrink-0 px-4`}
+                      >
+                        <div
+                          className={`${
+                            darkMode ? "bg-gray-800" : "bg-white"
+                          } rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow cursor-pointer h-full flex flex-col`}
+                        >
+                          <div className="w-full h-48 sm:h-64 overflow-hidden">
+                            <img
+                              src={item.image}
+                              alt={item.title}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+
+                          <div className="p-4 sm:p-6 flex flex-col flex-grow">
+                            <h3
+                              className={`text-xl sm:text-2xl font-bold mb-1 ${
+                                darkMode ? "text-white" : "text-gray-900"
+                              }`}
+                            >
+                              {item.title}
+                            </h3>
+                            <p className="font-medium text-cyan-400 text-sm sm:text-base mb-4">
+                              {item.subtitle}
+                            </p>
+                            
+                            {/* See More Button */}
+                            <button
+                              onClick={() => {
+                                setSelectedProject({ ...item, colors: item.colors || [] });
+                                setSelectedImageIndex(0);
+                                setShowModal(true);
+                              }}
+                              className="mt-auto text-cyan-400 hover:text-cyan-300 font-semibold transition-colors text-sm sm:text-base"
+                            >
+                              See More →
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Dots */}
+                <div className="flex justify-center mt-8 space-x-2">
+                  {Array.from({ length: totalSlides }).map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setPortfolioSlide(index)}
+                      className={`h-3 rounded-full transition-all ${
+                        portfolioSlide === index ? "bg-cyan-400 w-8" : "bg-gray-500 w-3"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* ======================= MODAL ======================= */}
+              {showModal && selectedProject && (
+                <div 
+                  className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+                  onClick={() => setShowModal(false)}
+                >
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className={`${
+                      darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+                    } max-w-5xl w-full rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto`}
+                  >
+                    {/* Header */}
+                    <div className={`sticky top-0 flex justify-between items-center p-4 border-b ${
+                      darkMode ? "border-gray-700 bg-gray-900" : "border-gray-200 bg-white"
+                    }`}>
+                      <h2 className="text-2xl font-bold">{selectedProject.title}</h2>
+                      <button
+                        onClick={() => setShowModal(false)}
+                        className="text-3xl font-bold hover:text-red-400 transition"
+                      >
+                        &times;
+                      </button>
+                    </div>
+
+                    {/* Image Gallery */}
+                    <div className="p-6">
+                      {/* Main Image - Full Size */}
+                      <div className="mb-6 rounded-lg overflow-hidden bg-gray-100">
+                        <img
+                          src={selectedProject.images ? selectedProject.images[selectedImageIndex] : selectedProject.image}
+                          alt={selectedProject.title}
+                          className="w-full h-auto"
+                        />
+                      </div>
+
+                      {/* Thumbnail Sidebar */}
+                      {selectedProject.images && selectedProject.images.length > 1 && (
+                        <div className="flex gap-3 mb-6 overflow-x-auto pb-2">
+                          {selectedProject.images.map((img, index) => (
+                            <div
+                              key={index}
+                              onClick={() => setSelectedImageIndex(index)}
+                              className={`min-w-24 w-24 h-24 rounded-lg overflow-hidden cursor-pointer border-2 transition-all flex-shrink-0 ${
+                                selectedImageIndex === index 
+                                  ? "border-cyan-400 scale-105" 
+                                  : darkMode ? "border-gray-700" : "border-gray-300"
+                              }`}
+                            >
+                              <img
+                                src={img}
+                                alt={`${selectedProject.title} ${index + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Info */}
+                    <div className="px-6 pb-6 space-y-6">
+                      <div>
+                        <p className={`text-lg leading-relaxed ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
+                          {selectedProject.description}
+                        </p>
+                      </div>
+
+                      {/* Stack */}
+                      {selectedProject.stack && selectedProject.stack.length > 0 && (
+                        <div>
+                          <h3 className="font-semibold mb-3 text-cyan-400">Tech Stack:</h3>
+                          <div className="flex gap-2 flex-wrap">
+                            {selectedProject.stack.map((tech) => (
+                              <span
+                              key={tech}
+                              className={`px-3 py-2 rounded-full text-sm bg-cyan-500/20 ${
+                                darkMode ? "text-cyan-400" : "text-cyan-900"
+                              }`}
+                            >
+                              {tech}
+                            </span>                            
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Colors */}
+                      {selectedProject.colors && selectedProject.colors.length > 0 && (
+                        <div>
+                          <h3 className="font-semibold mb-3 text-cyan-400">Color Palette:</h3>
+                          <div className="flex gap-4 flex-wrap">
+                            {selectedProject.colors.map((color) => (
+                              <div key={color} className="flex flex-col items-center">
+                                <div
+                                  className="w-16 h-16 rounded-lg border-2 border-gray-600"
+                                  style={{ backgroundColor: color }}
+                                ></div>
+                                <p className="text-xs mt-2 font-mono">{color}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          );
+        })()}
+
       </div>
-    </>
-  );
-})()}
-
-  </div>
-</section>
-
+    </section>
+ 
       {/* Project CTA */}
       <section  className={`py-16 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-gray-800' : 'bg-gray-900'} relative overflow-hidden`}>
         {/* Background decorative elements */}
@@ -1071,6 +1268,19 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
         .animate-scroll {
           animation: scroll 20s linear infinite;
           display: flex;
+        }
+          .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        * {
+          scrollbar-width: none;
+        }
+        *::-webkit-scrollbar {
+          display: none;
         }
       `}</style>
     </div>
