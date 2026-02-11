@@ -21,7 +21,8 @@ export default function Portfolio() {
       category: string;
       description: string;
       stack: string[];
-      colors?: string[]; // Make colors optional
+      colors?: string[];
+      link?: string;
   }
   
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -156,17 +157,10 @@ export default function Portfolio() {
       ? 1
       : Math.ceil(filteredPortfolio.length / 2);
   
-  // IMPORTANT — This must be at top level
+  // IMPORTANT — Autoplay DISABLED - manual navigation only
   useEffect(() => {
-    if (filteredPortfolio.length <= 2) return; // don't auto-slide if no real carousel
-  
-    const interval = setInterval(() => {
-      setPortfolioSlide((prev) =>
-        prev + 1 >= totalPortfolioSlides ? 0 : prev + 1
-      );
-    }, 4000);
-  
-    return () => clearInterval(interval);
+    // No auto-sliding - manual dots and clicks only
+    return () => {};
   }, [filteredPortfolio, totalPortfolioSlides]);
   return (
     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
@@ -592,11 +586,11 @@ export default function Portfolio() {
                 Why <span style={{color: '#00eeff'}}>Hire me</span>?
               </h2>
               <p className={`mb-8 ${darkMode ? 'text-white' : 'text-white'}`}>
-              I’m an enthusiastic problem-solver with a deep love for technology and lifelong learning. I believe in doing things the right way — with integrity, accountability, and a strong work ethic.
+              I'm an enthusiastic problem-solver with a deep love for technology and lifelong learning. I believe in doing things the right way — with integrity, accountability, and a strong work ethic.
 
-My skill set spans JavaScript, CSS, and Adobe Photoshop, and I enjoy building digital experiences that are both functional and visually engaging. I’m always looking for opportunities that challenge me and allow me to refine my craft.
+My skill set spans JavaScript, CSS, and Adobe Photoshop, and I enjoy building digital experiences that are both functional and visually engaging. I'm always looking for opportunities that challenge me and allow me to refine my craft.
 
-What sets me apart is my commitment to follow-through. When I take on a task, I give it my full attention and ensure it’s completed with care, creativity, and intention.
+What sets me apart is my commitment to follow-through. When I take on a task, I give it my full attention and ensure it's completed with care, creativity, and intention.
               </p>
               
               <div className="grid grid-cols-2 gap-6 mb-8">
@@ -660,6 +654,7 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
             description: string;
             stack: string[];
             colors?: string[];
+            link?: string;
           }> = [
             {
               id: "card1",
@@ -668,12 +663,11 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
               image: "/Img/e-commerce1.webp",
               images: [
                 "/Img/e-commerce1.webp",
-                // "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800",
-                // "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800"
               ],
               category: "Web Development",
               description: "An e-commerce platform designed for agricultural products with seamless shopping experience.",
               stack: ["React.js", "Node.js", "MongoDB"],
+              link: "https://agroease.trade",
             },
             {
               id: "card2",
@@ -692,6 +686,7 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
               category: "Web Development",
               description: "A modern architecture and interior design website showcasing stunning portfolios and services.",
               stack: ["HTML5", "CSS3", "JavaScript"],
+              link: "https://aonstudios.com",
             },
             {
               id: "card4",
@@ -709,12 +704,11 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
               image: "/Img/agro-website1 (1).webp",
               images: [
                 "/Img/agro-website1 (1).webp",
-                // "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800",
-                // "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800"
               ],
               category: "Web Development",
               description: "Corporate website for an agricultural firm showcasing services and products.",
               stack: ["Htnl5", "Css3", "Bootstrap"],
+              link: "https://agroease.ng",
             },
             {
               id: "card6",
@@ -723,12 +717,11 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
               image: "/Img/Currently.webp",
               images: [
                 "/Img/Currently.webp",
-                // "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=800",
-                // "https://images.unsplash.com/photo-1523995462485-3d171b5c8fa9?w=800"
               ],
               category: "Web Development",
               description: "A news and current affairs platform delivering the latest updates and articles.",
               stack: ["Vue.js", "TailwindCSS"],
+              link: "https://currently-ng.vercel.app",
             },
             {
               id: "card7",
@@ -746,12 +739,11 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
               image: "/Img/Agroconnect.webp",
               images: [
                 "/Img/Agroconnect.webp",
-                // "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800",
-                // "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800"
               ],
               category: "Web Development",
               description: "Platform connecting farmers with resources and market opportunities.",
               stack: ["Vue.js", "Node.js", "MongoDB"],
+              link: "https://agroconnect-project.vercel.app/",
             },
             {
               id: "card9",
@@ -779,6 +771,7 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
               category: "Web Development",
               description: "Empowering farmers through digital solutions and training resources.",
               stack: ["Wordpress"],
+              link: "https://starservagro.com",
             },
             {
               id: "card12",
@@ -787,12 +780,24 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
               image: "/Img/Coffee Shop.webp",
               images: [
                 "/Img/Coffee Shop.webp",
-                // "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800",
-                // "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=800"
               ],
               category: "Web Development",
               description: "Cozy coffee shop website with menu, online ordering, and location info.",
               stack: ["Vue.js", "Tailwind Css"],
+              link: "https://chai-kitchen.vercel.app/",
+            },
+            {
+              id: "card13",
+              title: "Social.",
+              subtitle: "Social Media Website",
+              image: "/Img/Social.png",
+              images: [
+                "/Img/Social.png",
+              ],
+              category: "Web Development",
+              description: "My Take on a revamped Facebook and X integrated together",
+              stack: ["Next.js", "Tailwind Css"],
+              link: "https://social-app-five-sage.vercel.app/",
             },
           ];
 
@@ -821,16 +826,10 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
             setPortfolioSlide(0);
           }, [portfolioFilter]);
 
-          // Autoplay
+          // Autoplay - DISABLED
           useEffect(() => {
-            const interval = setInterval(() => {
-              setPortfolioSlide((prev) => {
-                if (prev + 1 >= totalSlides) return 0;
-                return prev + 1;
-              });
-            }, 4000);
-
-            return () => clearInterval(interval);
+            // Auto-advance disabled - only manual navigation via dots or card clicks
+            return () => {};
           }, [totalSlides, isMobile]);
 
           return (
@@ -839,7 +838,7 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
               <div className="relative mb-12">
                 <div className="overflow-hidden py-8">
                   <div
-                    className="flex transition-transform duration-[700ms] ease-[cubic-bezier(.22,.61,.36,1)]"
+                    className="flex transition-transform duration-[2000ms] ease-[cubic-bezier(.22,.61,.36,1)]"
                     style={{
                       transform: `translateX(-${portfolioSlide * 100}%)`,
                     }}
@@ -852,7 +851,16 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
                         <div
                           className={`${
                             darkMode ? "bg-gray-800" : "bg-white"
-                          } rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow cursor-pointer h-full flex flex-col`}
+                          } rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow ${item.link ? 'cursor-pointer' : ''} h-full flex flex-col`}
+                          onClick={() => {
+                            if (item.link) {
+                              window.open(item.link, '_blank');
+                            } else {
+                              setSelectedProject({ ...item, colors: item.colors || [] });
+                              setSelectedImageIndex(0);
+                              setShowModal(true);
+                            }
+                          }}
                         >
                           <div className="w-full h-48 sm:h-64 overflow-hidden">
                             <img
@@ -876,14 +884,17 @@ What sets me apart is my commitment to follow-through. When I take on a task, I 
                             
                             {/* See More Button */}
                             <button
-                              onClick={() => {
-                                setSelectedProject({ ...item, colors: item.colors || [] });
-                                setSelectedImageIndex(0);
-                                setShowModal(true);
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if (!item.link) {
+                                  setSelectedProject({ ...item, colors: item.colors || [] });
+                                  setSelectedImageIndex(0);
+                                  setShowModal(true);
+                                }
                               }}
                               className="mt-auto text-cyan-400 hover:text-cyan-300 font-semibold transition-colors text-sm sm:text-base"
                             >
-                              See More →
+                              {item.link ? 'Visit Site →' : 'See More →'}
                             </button>
                           </div>
                         </div>
